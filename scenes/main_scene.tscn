@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://drtshhv66uj57"]
+
+[ext_resource type="PackedScene" uid="uid://wtd8nfnx35mc" path="res://objects/characters/main_character/character.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://c0auexl1y300h" path="res://shaders/world_environment.tscn" id="2_pw63i"]
+[ext_resource type="PackedScene" uid="uid://d2qcfkcl0twqf" path="res://objects/characters/test_enemy/test_enemy.tscn" id="3_enemy"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7ykc4"]
+vertices = PackedVector3Array(-14.5, 0.5, -14.5, -14.5, 0.5, 14.5, 14.5, 0.5, 14.5, 14.5, 0.5, -14.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+geometry_parsed_geometry_type = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pw63i"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
+
+[node name="main_scene" type="Node3D" unique_id=1150691575]
+
+[node name="TestEnemy" parent="." unique_id=718250128 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 9.905658)
+TargetPath = NodePath("../Character")
+Speed = 1.0
+
+[node name="Character" parent="." unique_id=464049800 instance=ExtResource("1_w2twt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -13.149752)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1706900362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+navigation_mesh = SubResource("NavigationMesh_7ykc4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1603893240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" unique_id=24427477]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+shape = SubResource("BoxShape3D_pw63i")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D" unique_id=841474187]
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("BoxMesh_7ykc4")
+
+[node name="WorldEnvironment" parent="." unique_id=1077734098 instance=ExtResource("2_pw63i")]

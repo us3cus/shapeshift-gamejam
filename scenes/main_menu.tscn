@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dk38w882325gj"]
+
+[ext_resource type="Texture2D" uid="uid://brs5drfy173tl" path="res://objects/Screenshot 2025-12-14 014539.png" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://cqjfue11jns3v" path="res://scripts/main_menu.gd" id="2_oqd7f"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ekxnf"]
+blend_mode = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqqt6"]
+font_size = 48
+
+[node name="main_menu" type="Control" unique_id=1784514878]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_oqd7f")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=574334372]
+material = SubResource("CanvasItemMaterial_ekxnf")
+layout_mode = 0
+offset_left = -380.0
+offset_top = -146.0
+offset_right = 1470.0
+offset_bottom = 729.0
+texture = ExtResource("1_l6cm7")
+
+[node name="Label" type="Label" parent="." unique_id=1971247936]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 62.0
+offset_right = 211.0
+offset_bottom = 85.0
+text = "Какая то игра"
+label_settings = SubResource("LabelSettings_bqqt6")
+
+[node name="buttons" type="Control" parent="." unique_id=174921252]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="exit_button" type="Button" parent="buttons" unique_id=470864914]
+layout_mode = 0
+offset_left = 871.0
+offset_top = 481.0
+offset_right = 1054.0
+offset_bottom = 539.0
+text = "Выход"
+
+[node name="settings_button" type="Button" parent="buttons" unique_id=1679599604]
+layout_mode = 0
+offset_left = 871.0
+offset_top = 422.0
+offset_right = 1054.0
+offset_bottom = 480.0
+text = "Настройки"
+
+[node name="start_button" type="Button" parent="buttons" unique_id=253746610]
+layout_mode = 0
+offset_left = 871.0
+offset_top = 363.0
+offset_right = 1054.0
+offset_bottom = 421.0
+text = "Начать"

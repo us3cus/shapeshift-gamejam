@@ -1,0 +1,44 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot import/build cache
+.import/
+*.translation
+
+# Exported builds and binary artifacts
+build/
+builds/
+dist/
+exports/
+*.exe
+*.dll
+*.so
+*.dylib
+*.app/
+*.apk
+*.aab
+*.ipa
+*.pck
+*.zip
+*.7z
+*.rar
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# AI assistants, MCP state, and prompt workspaces
+.asset-aware-mcp/
+.codex/
+.claude/
+.cline/
+.clinerules/
+.github/agents/
+prompts/
+mcp/

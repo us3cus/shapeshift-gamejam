@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c0auexl1y300h"]
+
+[ext_resource type="Material" uid="uid://cp0yyfy3qjaj1" path="res://shaders/skybox.tres" id="1_iqtv6"]
+
+[sub_resource type="Sky" id="Sky_one7h"]
+sky_material = ExtResource("1_iqtv6")
+
+[sub_resource type="Environment" id="Environment_kt53e"]
+background_mode = 2
+sky = SubResource("Sky_one7h")
+ssr_enabled = true
+sdfgi_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" unique_id=1077734098]
+environment = SubResource("Environment_kt53e")
