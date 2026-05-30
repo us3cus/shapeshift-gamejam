@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b8seq6h88q3p"]
+
+[ext_resource type="Script" path="res://objects/weapons/laser_weapon/laser_weapon.gd" id="1_7w0n3"]
+
+[node name="LaserWeapon" type="Node3D"]
+script = ExtResource("1_7w0n3")

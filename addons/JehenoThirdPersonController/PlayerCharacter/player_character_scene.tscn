@@ -18,6 +18,7 @@
 [ext_resource type="LabelSettings" uid="uid://sescerp70o6b" path="res://addons/JehenoThirdPersonController/Arts/Fonts/LabelFontSettings.tres" id="17_c1i0s"]
 [ext_resource type="Script" uid="uid://chnbi4s1tf7pa" path="res://addons/JehenoThirdPersonController/PlayerCharacter/HUD/hud_script.gd" id="17_qmq2g"]
 [ext_resource type="Script" uid="uid://dv4p3s7ptfebh" path="res://addons/JehenoThirdPersonController/PlayerCharacter/InputManagement/input_management_component_script.gd" id="19_dp0tn"]
+[ext_resource type="PackedScene" path="res://objects/weapons/laser_weapon/laser_weapon.tscn" id="20_7w0n3"]
 
 [sub_resource type="Curve" id="Curve_l1d2p"]
 _limits = [0.0, 10.0, 0.0, 1.0]
@@ -170,6 +171,9 @@ script = ExtResource("14_8rpwc")
 unique_name_in_owner = true
 target_position = Vector3(0, -2, 0)
 collision_mask = 2
+
+[node name="LaserWeapon" parent="." instance=ExtResource("20_7w0n3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.2, -0.6)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=812157866 node_paths=PackedStringArray("play_char")]
 unique_name_in_owner = true

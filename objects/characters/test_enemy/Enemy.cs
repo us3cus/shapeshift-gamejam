@@ -10,16 +10,25 @@ public partial class Enemy : CharacterBody3D
 	[Export] public float Gravity { get; set; } = 24.0f;
 	[Export] public float TouchDistance { get; set; } = 0.9f;
 	[Export] public float TargetRefreshSeconds { get; set; } = 0.1f;
+	[Export] public float MaxHealth { get; set; } = 30.0f;
+	[Export] public NodePath HealthBarRootPath { get; set; } = "HealthBarRoot";
+	[Export] public NodePath HealthBarFillPath { get; set; } = "HealthBarRoot/Fill";
 	[Export] public bool UseDirectFallback { get; set; } = true;
 	[Export] public float MinPathPointDistance { get; set; } = 0.25f;
 	[Export] public bool DebugLogsEnabled { get; set; } = true;
 	[Export] public float DebugLogIntervalSeconds { get; set; } = 1.0f;
 
+	private const float HealthBarWidth = 1.2f;
+	private const float HealthBarHeight = 0.12f;
+
 	private NavigationAgent3D _navigationAgent;
 	private Area3D _touchArea;
+	private Node3D _healthBarRoot;
+	private MeshInstance3D _healthBarFill;
 	private Node3D _target;
 	private double _targetRefreshTimer;
 	private double _debugLogTimer;
+	private float _health;
 	private bool _isDead;
 	private bool _warnedAboutTargetPath;
 	private bool _warnedAboutMissingTarget;
@@ -27,8 +36,11 @@ public partial class Enemy : CharacterBody3D
 
 	public override void _Ready()
 	{
+		_health = MaxHealth;
 		_navigationAgent = ResolveNavigationAgent();
 		_touchArea = GetNodeOrNull<Area3D>(TouchAreaPath);
+		_healthBarRoot = GetNodeOrNull<Node3D>(HealthBarRootPath);
+		_healthBarFill = GetNodeOrNull<MeshInstance3D>(HealthBarFillPath);
 
 		if (_navigationAgent != null)
 		{
@@ -51,7 +63,25 @@ public partial class Enemy : CharacterBody3D
 		}
 
 		ResolveTarget();
+		UpdateHealthBar();
 		LogDebug($"ready. target={FormatNode(_target)}, nav_agent={FormatNode(_navigationAgent)}, position={FormatVector(GlobalPosition)}");
+	}
+
+	public void ApplyDamage(float amount, Node source)
+	{
+		if (_isDead || amount <= 0.0f)
+		{
+			return;
+		}
+
+		_health = Mathf.Max(0.0f, _health - amount);
+		UpdateHealthBar();
+		LogDebug($"took {amount:0.00} damage from {FormatNode(source)}; health={_health:0.00}", false);
+
+		if (_health <= 0.0f)
+		{
+			Die();
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -80,7 +110,48 @@ public partial class Enemy : CharacterBody3D
 
 		MoveAndSlide();
 		DieIfTouchingPlayer();
+		FaceHealthBarToCamera();
 		LogMovementStatus(delta);
+	}
+
+	private void UpdateHealthBar()
+	{
+		if (_healthBarFill == null)
+		{
+			return;
+		}
+
+		float healthRatio = MaxHealth <= 0.0f ? 0.0f : Mathf.Clamp(_health / MaxHealth, 0.0f, 1.0f);
+		float fillWidth = HealthBarWidth * healthRatio;
+
+		if (_healthBarFill.Mesh is QuadMesh fillMesh)
+		{
+			fillMesh.Size = new Vector2(fillWidth, HealthBarHeight);
+		}
+
+		_healthBarFill.Position = new Vector3((fillWidth - HealthBarWidth) * 0.5f, 0.0f, -0.002f);
+	}
+
+	private void FaceHealthBarToCamera()
+	{
+		if (_healthBarRoot == null)
+		{
+			return;
+		}
+
+		Camera3D camera = GetViewport().GetCamera3D();
+
+		if (camera == null)
+		{
+			return;
+		}
+
+		Vector3 lookPosition = camera.GlobalPosition;
+
+		if (_healthBarRoot.GlobalPosition.DistanceSquaredTo(lookPosition) > 0.001f)
+		{
+			_healthBarRoot.LookAt(lookPosition, Vector3.Up);
+		}
 	}
 
 	private void UpdateTargetPosition(double delta)

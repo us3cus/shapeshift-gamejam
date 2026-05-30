@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://d2qcfkcl0twqf"]
+[gd_scene load_steps=8 format=3 uid="uid://d2qcfkcl0twqf"]
 
 [ext_resource type="Script" uid="uid://bqdhchkwdoan4" path="res://objects/characters/test_enemy/Enemy.cs" id="1_enemy"]
 
@@ -12,6 +12,22 @@ albedo_color = Color(0.9, 0.12, 0.08, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_visual"]
 radius = 0.35
 height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_health_back"]
+shading_mode = 0
+cull_mode = 2
+albedo_color = Color(0.02, 0.02, 0.02, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_health_fill"]
+shading_mode = 0
+cull_mode = 2
+albedo_color = Color(0.15, 0.95, 0.25, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_health_back"]
+size = Vector2(1.2, 0.16)
+
+[sub_resource type="QuadMesh" id="QuadMesh_health_fill"]
+size = Vector2(1.2, 0.12)
 
 [node name="TestEnemy" type="CharacterBody3D" unique_id=718250128 groups=["enemies"]]
 collision_layer = 4
@@ -43,3 +59,15 @@ shape = SubResource("CapsuleShape3D_body")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 material_override = SubResource("StandardMaterial3D_enemy")
 mesh = SubResource("CapsuleMesh_visual")
+
+[node name="HealthBarRoot" type="Node3D" parent="." unique_id=128849125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+
+[node name="Back" type="MeshInstance3D" parent="HealthBarRoot" unique_id=558469662]
+material_override = SubResource("StandardMaterial3D_health_back")
+mesh = SubResource("QuadMesh_health_back")
+
+[node name="Fill" type="MeshInstance3D" parent="HealthBarRoot" unique_id=1059134087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.002)
+material_override = SubResource("StandardMaterial3D_health_fill")
+mesh = SubResource("QuadMesh_health_fill")
