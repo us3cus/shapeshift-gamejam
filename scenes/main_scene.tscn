@@ -2,7 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://wtd8nfnx35mc" path="res://objects/characters/main_character/character.tscn" id="1_w2twt"]
 [ext_resource type="PackedScene" uid="uid://c0auexl1y300h" path="res://shaders/world_environment.tscn" id="2_pw63i"]
-[ext_resource type="PackedScene" uid="uid://d2qcfkcl0twqf" path="res://objects/characters/test_enemy/test_enemy.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://d2qcfkcl0twqf" path="res://objects/characters/enemies/vacuum_cleaner/knifer/knifer.tscn" id="3_enemy"]
+[ext_resource type="PackedScene" uid="uid://do2l60bryhjxq" path="res://objects/characters/enemies/vacuum_cleaner/fanner/fanner.tscn" id="4_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://kcpencs0hw75" path="res://objects/characters/enemies/vacuum_cleaner/pistol/pistol.tscn" id="5_gubc5"]
+[ext_resource type="PackedScene" uid="uid://5go4hakhl27i" path="res://objects/characters/enemies/vacuum_cleaner/suicide/suicide.tscn" id="6_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://bqp56eua1boe3" path="res://scenes/map_remake.tscn" id="7_c16ls"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_7ykc4"]
 vertices = PackedVector3Array(-14.5, 0.5, -14.5, -14.5, 0.5, 14.5, 14.5, 0.5, 14.5, 14.5, 0.5, -14.5)
@@ -15,20 +19,17 @@ geometry_parsed_geometry_type = 1
 
 [node name="main_scene" type="Node3D" unique_id=1150691575]
 
-[node name="TestEnemy" parent="." unique_id=718250128 instance=ExtResource("3_enemy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 9.905658)
-TargetPath = NodePath("../Character")
-Speed = 1.0
-
 [node name="Character" parent="." unique_id=464049800 instance=ExtResource("1_w2twt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -13.149752)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.479567, -15.078612)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1706900362]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 navigation_mesh = SubResource("NavigationMesh_7ykc4")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1603893240]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" unique_id=24427477]
 transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
@@ -39,3 +40,24 @@ transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, 0, 0)
 mesh = SubResource("BoxMesh_7ykc4")
 
 [node name="WorldEnvironment" parent="." unique_id=1077734098 instance=ExtResource("2_pw63i")]
+
+[node name="Knifer" parent="." unique_id=718250128 instance=ExtResource("3_enemy")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 46.866783, 0.58236074, -117.767914)
+TargetPath = NodePath("../Character")
+Speed = 1.0
+
+[node name="Fanner" parent="." unique_id=1521837596 instance=ExtResource("4_pu3yx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 46.866783, 0.5823608, -113.71686)
+TargetPath = NodePath("../Character")
+Speed = 1.0
+
+[node name="pistol" parent="." unique_id=1461694160 instance=ExtResource("5_gubc5")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 50.40966, 0.5823608, -116.65808)
+TargetPath = NodePath("../Character")
+Speed = 1.0
+
+[node name="Suicide" parent="." unique_id=1663971234 instance=ExtResource("6_rt2n2")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 38.6056, 0.5823608, -116.47827)
+TargetPath = NodePath("../Character")
+
+[node name="Игра" parent="." unique_id=664169680 instance=ExtResource("7_c16ls")]
