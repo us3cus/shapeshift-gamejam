@@ -5,13 +5,18 @@ extends Node3D
 @export var damage_per_second: float = 10.0
 @export var max_range: float = 30.0
 @export_flags_3d_physics var collision_mask: int = 5
+@export var use_input: bool = true
 @export var aim_from_camera: bool = true
 @export var camera_path: NodePath = ^"../CameraHolder/SpringArm3D/Camera3D"
+@export var use_external_aim: bool = false
 
 var _beam: Node3D
 var _beam_end: Node3D
 var _camera: Camera3D
 var _is_firing := false
+var _external_firing := false
+var _external_aim_direction := Vector3.ZERO
+var _external_exclusion_root: Node
 
 func _ready() -> void:
 	_ensure_fire_action_registered()
@@ -20,12 +25,26 @@ func _ready() -> void:
 	_set_beam_active(false)
 
 func _physics_process(delta: float) -> void:
-	_is_firing = Input.is_action_pressed(fire_action)
+	_is_firing = _external_firing
+	if use_input:
+		_is_firing = _is_firing or Input.is_action_pressed(fire_action)
+
 	_update_aim()
 	_set_beam_active(_is_firing)
 
 	if _is_firing:
 		_fire_laser(delta)
+
+func set_external_firing(active: bool) -> void:
+	_external_firing = active
+	if not active:
+		_set_beam_active(false)
+
+func set_external_aim_direction(direction: Vector3) -> void:
+	_external_aim_direction = direction.normalized() if direction.length_squared() > 0.0001 else Vector3.ZERO
+
+func set_external_exclusion_root(root: Node) -> void:
+	_external_exclusion_root = root
 
 func _setup_beam() -> void:
 	_beam_end = Node3D.new()
@@ -83,6 +102,9 @@ func _update_aim() -> void:
 	look_at(target, up)
 
 func _get_aim_direction() -> Vector3:
+	if use_external_aim and _external_aim_direction.length_squared() > 0.0001:
+		return _external_aim_direction.normalized()
+
 	if aim_from_camera:
 		if not is_instance_valid(_camera):
 			_camera = get_viewport().get_camera_3d()
@@ -125,7 +147,7 @@ func _set_beam_active(active: bool) -> void:
 
 func _build_exclusion_rids() -> Array[RID]:
 	var exclusions: Array[RID] = []
-	var current := get_parent()
+	var current := _external_exclusion_root if is_instance_valid(_external_exclusion_root) else get_parent()
 
 	while current != null:
 		if current is CollisionObject3D:
