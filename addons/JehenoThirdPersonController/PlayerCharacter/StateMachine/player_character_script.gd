@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 class_name PlayerCharacter
 
+signal health_changed(current_health : float, max_health : float)
+signal died
+
 #movement variables
 var move_speed : float
 var move_accel : float
@@ -24,6 +27,12 @@ var walk_or_run : String = "WalkState" #keep in memory if play char was walking 
 @export var run_accel : float = 3.5
 @export var run_deccel : float = 6.5
 @export var continious_run : bool = false #if true, doesn't need to keep run button on to run
+
+@export_group("Health")
+@export var max_health : float = 100.0
+@export var death_reload_delay : float = 0.35
+var health : float
+var is_dead : bool = false
 
 @export_group("Jump variables")
 @export var jump_height : float = 3.0
@@ -82,6 +91,9 @@ var jump_action : StringName
 @onready var land_particles = preload("../../PlayerCharacter/VFX/land_particles_scene.tscn")
 
 func _ready():
+	health = max_health
+	health_changed.emit(health, max_health)
+	
 	#set move variables, and value references
 	move_speed = walk_speed
 	move_accel = walk_accel
@@ -94,12 +106,43 @@ func _ready():
 	connect_footstep_audio_effect()
 	
 func _process(delta: float):
+	if is_dead:
+		return
+	
 	modify_model_orientation(delta)
 	
 func _physics_process(_delta : float):
+	if is_dead:
+		return
+	
 	modify_physics_properties()
 	
 	move_and_slide()
+
+func ApplyDamage(amount : float, source : Node = null) -> void:
+	apply_damage(amount, source)
+
+func apply_damage(amount : float, _source : Node = null) -> void:
+	if is_dead or amount <= 0.0:
+		return
+	
+	health = maxf(health - amount, 0.0)
+	health_changed.emit(health, max_health)
+	
+	if health <= 0.0:
+		_die()
+
+func _die() -> void:
+	if is_dead:
+		return
+	
+	is_dead = true
+	died.emit()
+	velocity = Vector3.ZERO
+	await get_tree().create_timer(death_reload_delay).timeout
+	
+	if is_inside_tree():
+		get_tree().reload_current_scene()
 	
 func modify_model_orientation(delta : float):
 	#manage the model rotation depending on the camera mode + char parameters
