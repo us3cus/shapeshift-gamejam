@@ -91,6 +91,7 @@ height = 1.7036133
 
 [node name="PlayerCharacter" type="CharacterBody3D" unique_id=841616460]
 collision_layer = 2
+collision_mask = 1
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -170,7 +171,7 @@ script = ExtResource("14_8rpwc")
 [node name="FloorRaycast" type="RayCast3D" parent="Raycasts" unique_id=1653520062]
 unique_name_in_owner = true
 target_position = Vector3(0, -2, 0)
-collision_mask = 2
+collision_mask = 1
 
 [node name="LaserWeapon" parent="." instance=ExtResource("20_7w0n3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.2, -0.6)

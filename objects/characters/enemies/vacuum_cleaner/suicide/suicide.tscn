@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://5go4hakhl27i"]
 
 [ext_resource type="Script" uid="uid://dy0ln8psxh1gr" path="res://objects/characters/enemies/vacuum_cleaner/suicide/Enemy.cs" id="1_84gon"]
+[ext_resource type="Shader" uid="uid://bje6uh8pr17to" path="res://shaders/outline_shader.gdshader" id="2_2fiwf"]
 [ext_resource type="Texture2D" uid="uid://hfuy5qf5y6re" path="res://objects/characters/enemies/vacuum_cleaner/бомба_0.png" id="3_1lhu0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fkwfl"]
@@ -8,6 +9,12 @@ size = Vector3(2.2233887, 0.5411377, 2.0272217)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_magjr"]
 size = Vector3(2.0100098, 0.21862793, 1.7060547)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fvp47"]
+render_priority = 0
+shader = ExtResource("2_2fiwf")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 3.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_brb1j"]
 resource_name = "Материал.003"
@@ -131,6 +138,7 @@ shape = SubResource("BoxShape3D_magjr")
 
 [node name="Цилиндр_002" type="MeshInstance3D" parent="VisualRoot" unique_id=2061427413]
 transform = Transform3D(7.330024, -99.69893, 2.5285034, 0.4905079, 2.571333, 99.96574, -99.729774, -7.315111, 0.67751056, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_fvp47")
 mesh = SubResource("ArrayMesh_wyd01")
 
 [node name="FlameOrigin" type="Node3D" parent="." unique_id=710682134]
