@@ -1,19 +1,19 @@
 [gd_scene format=4 uid="uid://wrwxmf3ymgy6"]
 
-[ext_resource type="Script" uid="uid://c3qslrh73y4ka" path="res://objects/characters/enemies/vacuum_cleaner/boss/Enemy.cs" id="1_e4ru4"]
-[ext_resource type="Texture2D" uid="uid://dsfaw5l868rx5" path="res://objects/characters/enemies/vacuum_cleaner/boss/боссс_0.png" id="2_e4ru4"]
-[ext_resource type="Texture2D" uid="uid://hfuy5qf5y6re" path="res://objects/characters/enemies/vacuum_cleaner/бомба_0.png" id="3_eb0in"]
+[ext_resource type="Script" uid="uid://c3qslrh73y4ka" path="res://objects/characters/enemies/vacuum_cleaner/boss/Enemy.cs" id="1_4ufce"]
+[ext_resource type="Texture2D" uid="uid://dsfaw5l868rx5" path="res://objects/characters/enemies/vacuum_cleaner/boss/боссс_0.png" id="2_dj26j"]
+[ext_resource type="Texture2D" uid="uid://hfuy5qf5y6re" path="res://objects/characters/enemies/vacuum_cleaner/бомба_0.png" id="3_1fx8e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fkwfl"]
 size = Vector3(2.2233887, 0.5411377, 2.0272217)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_magjr"]
-size = Vector3(2.0100098, 0.21862793, 1.7060547)
+size = Vector3(2.0100098, 0.40374756, 1.7060547)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h7vtt"]
 resource_name = "Материал.002"
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_e4ru4")
+albedo_texture = ExtResource("2_dj26j")
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_energy_multiplier = 0.0
@@ -113,7 +113,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_306sw")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d01sp"]
-albedo_texture = ExtResource("3_eb0in")
+albedo_texture = ExtResource("3_1fx8e")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eb0in"]
 blend_mode = 1
@@ -144,11 +144,11 @@ collision_mask = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-script = ExtResource("1_e4ru4")
+script = ExtResource("1_4ufce")
 Speed = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=129048557]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05847168, 0.10584718, -0.019104004)
+transform = Transform3D(1.7592945, 0, 0, 0, 8.905127, 0, 0, 0, 1.6415591, 0.0806703, 1.4538814, -0.025232177)
 shape = SubResource("BoxShape3D_fkwfl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1785191535]
@@ -156,11 +156,12 @@ path_desired_distance = 0.35
 target_desired_distance = 1.15
 
 [node name="TouchArea" type="Area3D" parent="." unique_id=1922659872]
+transform = Transform3D(1.7592945, 0, 0, 0, 8.905127, 0, 0, 0, 1.6415591, -0.022198616, 0.51129884, 0.0061281733)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TouchArea" unique_id=1693064664]
-transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0.07095337, 0.21339417, 0.03967285)
+transform = Transform3D(1.25, 0, 0, 0, 1.250001, 0, 0, 0, 1.2500001, 0.07095337, 0.09769439, 0.039672855)
 shape = SubResource("BoxShape3D_magjr")
 
 [node name="VisualRoot" type="Node3D" parent="." unique_id=983024398]
@@ -171,7 +172,13 @@ mesh = SubResource("ArrayMesh_vhwe0")
 surface_material_override/0 = SubResource("StandardMaterial3D_d01sp")
 surface_material_override/1 = SubResource("StandardMaterial3D_eb0in")
 
+[node name="ProjectileOrigin" type="Node3D" parent="." unique_id=927980989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11209607, 0.05882001, -3.2398124)
+
 [node name="FlameOrigin" type="Node3D" parent="." unique_id=710682134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7252715, -0.1976639)
+
+[node name="LightningOrigin" type="Node3D" parent="." unique_id=465595234]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7252715, -0.1976639)
 
 [node name="HealthBarRoot" type="Node3D" parent="." unique_id=128849125]
@@ -182,6 +189,6 @@ material_override = SubResource("StandardMaterial3D_health_back")
 mesh = SubResource("QuadMesh_health_back")
 
 [node name="Fill" type="MeshInstance3D" parent="HealthBarRoot" unique_id=1059134087]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0029265247)
 material_override = SubResource("StandardMaterial3D_health_fill")
 mesh = SubResource("QuadMesh_health_fill")
